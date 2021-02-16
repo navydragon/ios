@@ -128,7 +128,7 @@
     </div>
 
     <div class="result__item container">
-        <div class="piechart" data-color="#D9534F" data-trackcolor="rgba(0,0,0,0.04)" data-size="100" data-percent="{{$m_p / $p * 100}}" data-width="10" data-animate="1700">
+        <div class="piechart" data-color="#D9534F" data-trackcolor="rgba(0,0,0,0.04)" data-size="100" data-percent="80" data-width="10" data-animate="1700">
         </div>
         <img class="result__img" src="/images/result-3.png" alt="" style="">
         <div class="result__info">
