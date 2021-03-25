@@ -39,9 +39,10 @@ class TestController extends Controller
 	    	$na->event_id = $event->id;
 	    	$na->user_id = Auth::user()->id;
 	    	$na->save();
-	    	return redirect('/tests/attempts/'.$na->id);
+	    	return redirect('/events/'.$event->id.'/tests/attempts/'.$na->id);
 	    }else{
 	    	$ta = $att->first();
+            $ta = TestAttempt::find($ta->id);
 	    	return view('projects.tests.attempts.show',compact('ta','event'));
 	    }
     }

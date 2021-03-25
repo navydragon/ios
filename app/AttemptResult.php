@@ -37,4 +37,13 @@ class AttemptResult extends Model
 
         return $this->getAttribute($keyName);
     }
+
+    public function answer()
+    {
+        return $this->belongsTo('App\TestAnswer','answer_id');
+    }
+    public function question()
+    {
+        return $this->belongsTo('App\TestQuestion','question_id');
+    }
 }

@@ -64,7 +64,7 @@
                                 <td class="table__main">{{\Carbon\Carbon::createFromTimeStamp(strtotime($attempt->updated_at))->format('d.m.y')}}</td>
                                 <td class="table__main">
                                     @if ($attempt->status != 0)
-                                        <a href="/tests/attempts/{{$attempt->id}}/review">Просмотр</a>
+                                        <a href="/events/{{$event->id}}/tests/attempts/{{$attempt->id}}/review">Просмотр</a>
                                     @endif
                                 </td>
                             </tr>
@@ -79,7 +79,7 @@
                 
                 @if ($test->user_attempts(Auth::user()->id,$event->id)->get()->count() > 0 )
                     @if ($attempt->status == 0)
-                    <a href="/tests/attempts/{{$attempt->id}}" class="btn btn-primary">Продолжить попытку</a>
+                    <a href="/events/{{$event->id}}/tests/attempts/{{$attempt->id}}" class="btn btn-primary">Продолжить попытку</a>
                     @else
                     <a href="/events/{{$event->id}}/tests/{{$test->id}}/new_attempt" class="btn btn-primary">Пройти тест заново</a>
                     @endif

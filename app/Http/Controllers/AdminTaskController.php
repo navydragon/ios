@@ -17,7 +17,7 @@ class AdminTaskController extends Controller
 {
     public function index()
     {
-    	$tasks = Task::all();
+        $tasks = Task::with('author:id,filial_id')->get();
     	return view('admin.tasks.index',compact('tasks'));
     }
 

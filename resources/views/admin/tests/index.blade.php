@@ -26,6 +26,7 @@
 			</thead>
 			<tbody>
 				@foreach ($tests as $test)
+                    @if (Auth::user()->admin_access($test->author->filial_id))
 					<tr>
 					<td>{{$test->id}}</td>
 					<td>{{$test->name}}</td>
@@ -45,6 +46,7 @@
                     </div>
                     </td>
 					</tr>
+                    @endif
 				@endforeach
 			</tbody>
 		</table>

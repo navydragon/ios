@@ -17,4 +17,9 @@ class Task extends Model
     {
     	return $this->hasMany('App\TaskFile');
     }
+
+    public function author()
+    {
+        return $this->belongsTo('App\User','author_id');
+    }
 }

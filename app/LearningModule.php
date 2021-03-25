@@ -12,4 +12,9 @@ class LearningModule extends Model
     	$events = Event::where('event_type_id', '=',2)->where('project_stage_id','=',$stage)->where('source_id','=',$this->id);
     	return $events;
     }
+
+    public function author()
+    {
+        return $this->belongsTo('App\User','author_id');
+    }
 }

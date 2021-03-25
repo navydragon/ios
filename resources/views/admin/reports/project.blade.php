@@ -15,6 +15,7 @@
     <div class="card-body">
         @foreach ($project->stages as $stage)
         <h5>Этап: {{$stage->name}} ({{\Carbon\Carbon::createFromTimeStamp(strtotime($stage->start_date))->format('d.m.Y')}} - {{\Carbon\Carbon::createFromTimeStamp(strtotime($stage->end_date))->format('d.m.Y')}})</h5>
+        <a href="/adm/docx/stages/{{$stage->id}}" class="btn btn-primary">Экспорт результатов</a>
         <table class="table table-bordered">
         <thead><tr><th>Мероприятие</th><th>Тип</th><th>Участвовало пользователей</th><th>Действия</th></tr></thead>
         <tbody>

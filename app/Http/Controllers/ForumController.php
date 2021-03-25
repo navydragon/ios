@@ -26,6 +26,14 @@ class ForumController extends Controller
     	return view('forum.show',compact('forum','menu_slot'));
     }
 
+    public function store(Request $request)
+    {
+        $forum = new Forum;
+        $forum->name = $request->name;
+        $forum->save();
+        return back();
+    }
+
     public function show_thread(Forum $forum, ForumThread $thread)
     {
         $menu_slot = 'forums';

@@ -57,6 +57,7 @@
                         <th>ID</th>
                         <th>Название</th>
                         <th>Тип</th>
+                        <th>Участвовало слушаталей</th>
                         <th>Дата завершения</th>
                         <th>Действия</th>
                     </tr>
@@ -68,6 +69,7 @@
                         <td>{{$event->id}}</td>
                         <td>{{$ev->name}}</td>
                         <td>{{$ev->type}}</td>
+                        <td>{{$event->event_results()->count()}}</td>
                         <td>{{\Carbon\Carbon::createFromTimeStamp(strtotime($event->event_parameter->max_date))->format('d.m.Y')}} </td>
                         <td>
                             <a href="/adm/reports/events/{{$event->id}}" class="btn btn-primary"> Результаты </a>

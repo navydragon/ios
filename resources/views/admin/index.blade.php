@@ -51,7 +51,7 @@
                     <img class="result__img" src="/images/result-4.png" alt="" style="width: 50px; height: 50px;">
                     <div class="ml-3">
                         <div class="text-muted small">Типов мероприятий в базе</div>
-                        <div class="text-large">!!!</div>
+                        <div class="text-large">{{$types}}</div>
                     </div>
                 </div>
             </div>
@@ -205,7 +205,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Добавить мероприятие в кадендарь</h5>
+                    <h5 class="modal-title">Добавить мероприятие в каlендарь</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">×</button>
                 </div>
                 <div class="modal-body">
@@ -290,8 +290,8 @@
 	    },
 
 	    defaultDate: today,
-	    navLinks: true, // can click day/week names to navigate views
-	    selectable: true,
+	    navLinks: false, // can click day/week names to navigate views
+	    selectable: false,
 	    weekNumbers: true, // Show week numbers
 	    nowIndicator: true, // Show "now" indicator
 	    firstDay: 1, // Set "Monday" as start of a week
@@ -342,7 +342,7 @@
 	    },
 
 	    eventClick: function(calEvent) {
-	      alert('Event: ' + calEvent.event.title);
+	      //alert('Event: ' + calEvent.event.title);
 	    }
 	  });
 

@@ -4,7 +4,7 @@
 <section>
 <div class="container">
 		<div class="col-md-9">
-			<form method="POST" action="/tests/attempts/{{$ta->id}}/save">
+			<form method="POST" action="/events/{{$event->id}}/tests/attempts/{{$ta->id}}/save">
 			@csrf
 			<h3>{{$ta->test->name}}</h3>
 			<table class="table table-striped table-bordered">
@@ -16,7 +16,7 @@
 				</thead>
 			@php $n = 1; @endphp
 			<tbody>
-			@foreach($ta->test->questions as $question)
+			@foreach($qs as $question)
 				<tr>
 					<td class="text-center">{{$n}}</td>
 					<td class="text-center">
@@ -34,7 +34,7 @@
 			</table>
 			<div class="row">
 				<div class="col-md-6 text-center">
-					<a href="/tests/attempts/{{$ta->id}}" class="btn btn-info">Вернуться к прохождению</a>
+					<a href="/events/{{$event->id}}/tests/attempts/{{$ta->id}}" class="btn btn-info">Вернуться к прохождению</a>
 				</div>
 				<div class="col-md-6 text-center">
 					<button type="submit" class="btn btn-primary">Отправить все и завершить тест</button>
@@ -49,7 +49,7 @@
 				</div>
 				<div class="panel-body">
 					@php $n=0;@endphp
-					@foreach($ta->test->questions as $question)
+					@foreach($qs as $question)
 					@php $n++;@endphp
 					<a href="#q{{$n}}" class="btn btn-default radius-0 relative">
 						@if ($question->is_answered($ta->id))

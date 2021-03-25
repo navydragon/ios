@@ -59,4 +59,5 @@ class Project extends Model
     {
         return $this->belongsTo('App\ProjectStatus','status');
     }
+
 }

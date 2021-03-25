@@ -18,7 +18,10 @@ class TestQuestion extends Model
    		return $this->hasMany('App\TestAnswer','question_id');
    	}
 
-
+    public function answers_in_attempt($test_attempt)
+    {
+        return $this->hasMany('App\AttemptResult','question_id')->where('attempt_id','=',$test_attempt)->get();
+    }
 
    	public function is_answered($test_attempt)
    	{

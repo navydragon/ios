@@ -61,10 +61,10 @@ Route::get('/projects/{project}/add_user/{user}', 'ProjectController@add_user_to
 Route::post('/events/{event}/surveys/{survey}', 'SurveyController@store_results');
 //Route::get('/projects/{project}/events/{event}/tests/{test}', 'TestController@show')->name('show_test');
 Route::get('/events/{event}/tests/{test}/new_attempt', 'TestController@new_attempt');
-Route::get('/tests/attempts/{attempt}', 'TestAttemptController@show_attempt');
-Route::post('/tests/attempts/{attempt}/summary', 'TestAttemptController@show_summary');
-Route::post('/tests/attempts/{attempt}/save', 'TestAttemptController@save_attempt');
-Route::get('/tests/attempts/{attempt}/review', 'TestAttemptController@review_attempt');
+Route::get('/events/{event}/tests/attempts/{attempt}', 'TestAttemptController@show_attempt');
+Route::post('/events/{event}/tests/attempts/{attempt}/summary', 'TestAttemptController@show_summary');
+Route::post('/events/{event}/tests/attempts/{attempt}/save', 'TestAttemptController@save_attempt');
+Route::get('/events/{event}/tests/attempts/{attempt}/review', 'TestAttemptController@review_attempt');
 
 Route::get('/projects/{project}/events/{event}/tasks/{task}', 'TaskController@show')->name('show_task');
 Route::post('/events/{event}/tasks/{task}/store_user_file', 'EventUserFileController@store');
@@ -84,6 +84,7 @@ Route::get('/events/{event}','EventController@show_event');
 
 
 Route::get('/forums', 'ForumController@index');
+Route::post('/forums', 'ForumController@store');
 Route::get('/forums/{forum}', 'ForumController@show');
 
 Route::get('/webinars', 'WebinarController@index');
@@ -268,10 +269,15 @@ Route::get('/adm/webinars/{webinar}/edit', 'AdminWebinarController@edit');
 Route::post('/adm/webinars/{webinar}', 'AdminWebinarController@update');
 Route::delete('/adm/webinars/{webinar}', 'AdminWebinarController@delete');
 
-
+Route::get('/adm/docx/projects/{project}/users','WordExportController@users_in_project');
 Route::get('/adm/docx/assessment_template/{project}/{event}','WordExportController@assessment_template');
 Route::get('/adm/docx/survey_template/{survey}','WordExportController@survey_template');
+Route::get('/adm/docx/events/{event}','WordExportController@event');
+Route::get('/adm/docx/stages/{stage}','WordExportController@stage');
 Route::get('/adm/docx/survey/{attempt}','WordExportController@survey');
+Route::get('/adm/docx/user_test/{event}/{user}','WordExportController@test');
+Route::get('/adm/docx/user_case/{event}/{user}','WordExportController@case');
+
 Route::get('/adm/docx/project_stage/{stage}/live_event_schedule/{day}','WordExportController@live_event_schedule');
 
 Route::get('/adm/tickets','TicketController@index');
@@ -281,6 +287,7 @@ Route::post('/adm/tickets/{ticket}/add_files','TicketController@add_files');
 
 Route::get('/adm/users','AdminUserController@index');
 Route::get('/adm/users/{user}','AdminUserController@show');
+Route::post('/adm/users','AdminUserController@store');
 Route::delete('/adm/users/{user}','AdminUserController@delete');
 Route::get('/adm/users/{user}/edit','AdminUserController@edit');
 Route::post('/adm/users/{user}/update','AdminUserController@update');

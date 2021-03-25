@@ -16,5 +16,11 @@ class DatabaseSeeder extends Seeder
         $this->call(ProjectStatusesSeeder::class);
         $this->call(KnBaseCategorySeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(CompetenceSeeder::class);
+        $this->call(EventTypesSeeder::class);
+        $this->call(ForumsSeeder::class);
+        $this->call(ProjectRolesSeeder::class);
+        $this->call(QuestionTypesSeeder::class);
+        $this->call(TicketTypesSeeder::class);
     }
 }

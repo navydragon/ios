@@ -11,7 +11,7 @@ class AdminSurveyController extends Controller
 {
     public function index()
     {
-    	$surveys = Survey::all();
+        $surveys = Survey::with('author:id,filial_id')->get();
     	return view('admin.surveys.index',compact('surveys'));
     }
 
@@ -66,7 +66,7 @@ class AdminSurveyController extends Controller
     }
     public function store_question(Survey $survey, Request $request)
     {
-    	$surv= Survey::findOrFail($survey);
+    	$surv= Survey::findOrFail($survey->id);
     	$sq = new SurveyQuestion;
     	$sq->survey_id = $survey->id;
         $sq->body = $request->body;

@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Yadahan\AuthenticationLog\AuthenticationLogable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 
@@ -143,5 +144,23 @@ class User extends Authenticatable
        ->where('user_id','=',$this->id)
        ->where('project_id','=',$project_id)
        ->get()->first()->role_id;
+    }
+
+    public function local_events()
+    {
+        return $this->hasMany('App\EventResult','user_id')->with('event')->get();
+    }
+
+    public function admin_access($filial_id)
+    {
+        if (Auth::user()->role_id == 1)
+        {
+            return true;
+        }else if ($filial_id == Auth::user()->filial_id)
+        {
+           return true;
+        }else{
+            return false;
+        }
     }
 }

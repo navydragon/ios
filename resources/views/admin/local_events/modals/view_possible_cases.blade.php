@@ -10,7 +10,9 @@
   <select name="case_id" class="custom-select" required>
     <option selected value="">Выберите кейс</option>
     @foreach ($cases as $elem)
+    @if (Auth::user()->admin_access($elem->author->filial_id))
         <option value="{{$elem->id}}">{{$elem->name}}</option>
+    @endif
     @endforeach
     </select>    
   </div>

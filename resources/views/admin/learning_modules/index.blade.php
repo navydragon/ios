@@ -25,6 +25,7 @@
 			</thead>
 			<tbody>
 				@foreach ($learning_modules as $lm)
+                @if (Auth::user()->admin_access($lm->author->filial_id))
 					<tr>
 					<td>{{$lm->id}}</td>
 					<td>{{$lm->name}}</td>
@@ -43,6 +44,7 @@
                     </div>
                     </td>
 					</tr>
+                @endif
 				@endforeach
 			</tbody>
 		</table>

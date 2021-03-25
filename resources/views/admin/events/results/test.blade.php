@@ -23,7 +23,7 @@
   <div>
     <h5>Ответы в последней попытке:</h5> 
     @php $n = 1; @endphp
-			@foreach($last_attempt->test->questions as $question)
+        @foreach($qs as $question)
 			<div class="row">
 				<div class="col-md-2 alert  alert-default margin-bottom-30" id="q{{$n}}">
 					<p><strong>Вопрос № {{$n}}</strong></p>
@@ -77,5 +77,5 @@
 
 <div class="modal-footer">
     <a href="#" data-dismiss="modal" class="btn btn-default">Закрыть</a>
-    <a href="#"  class="btn btn-primary">Экспорт</a>   
+    <a href="/adm/docx/user_test/{{$last_attempt->event_id}}/{{$last_attempt->user_id}}"  class="btn btn-primary">Экспорт</a>   
 </div>

@@ -11,7 +11,9 @@
   <select name="test_id" class="custom-select" required>
     <option selected value="">Выберите тест</option>
     @foreach ($tests as $elem)
+    @if (Auth::user()->admin_access($elem->author->filial_id))
         <option value="{{$elem->id}}">{{$elem->name}} ({{$elem->questions_count}})</option>
+    @endif
     @endforeach
     </select>    
   </div>

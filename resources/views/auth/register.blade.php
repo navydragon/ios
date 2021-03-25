@@ -32,6 +32,11 @@
             <input id="email"  name="email" value="{{ old('email') }}" type="email" class="form-control{{ $errors->has('email') ? ' err' : '' }}" required >
             <span class="tooltip tooltip-top-right">E-mail</span>
         </label>
+        @if ($errors->has('email'))
+        <div class="alert alert-mini alert-danger mb-30">
+            <strong>Ошибка!</strong> {{ $errors->first('email') }}
+        </div>
+        @endif
 
         <label class="label mt-20"><strong>Пароль (не менее 6 символов)</strong></label>
         <label class="input">

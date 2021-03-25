@@ -11,7 +11,7 @@ class AdminLearningModuleController extends Controller
 {
     public function index()
     {
-        $learning_modules = LearningModule::all();
+        $learning_modules = LearningModule::with('author:id,filial_id')->get();
         
     	return view('admin.learning_modules.index',compact('learning_modules'));
     }

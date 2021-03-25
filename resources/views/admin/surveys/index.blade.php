@@ -28,6 +28,7 @@
             </thead>
             <tbody>
                 @foreach ($surveys as $survey)
+                @if (Auth::user()->admin_access($survey->author->filial_id))
                     <tr>
                     <td>{{$survey->id}}</td>
                     <td>{{$survey->name}}</td>
@@ -49,6 +50,7 @@
                         </div>
                     </td>
                     </tr>
+                    @endif
                 @endforeach
             </tbody>
         </table>

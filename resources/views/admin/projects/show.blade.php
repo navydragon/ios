@@ -135,6 +135,7 @@
         <div class="tab-pane fade" id="users">
             <div class="card-body">
                 <h4 class="margin-bottom-10"><strong>Участники сессии</strong></h4>
+                <a href="/adm/docx/projects/{{$project->id}}/users" target="_blank" class="btn btn-primary">Экспорт списка</a>
                 <table class="table table-bordered datatables-demo">
                     <thead>
                         <tr>

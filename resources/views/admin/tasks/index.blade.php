@@ -26,6 +26,7 @@
 			</thead>
 			<tbody>
 				@foreach ($tasks as $task)
+                    @if (Auth::user()->admin_access($task->author->filial_id))
 					<tr>
 					<td>{{$task->id}}</td>
 					<td>{{$task->name}}</td>
@@ -42,9 +43,8 @@
                             <a class="dropdown-item" href="#" onclick="delete_task('{{$task->id}}','{{$task->name}}')"><i class="fas fa-trash"></i> Удалить</a>
                         </form>
                     </div>
-
-
 					</tr>
+                    @endif
 				@endforeach
 			</tbody>
 		</table>

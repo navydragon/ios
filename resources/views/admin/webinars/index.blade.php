@@ -26,6 +26,7 @@
             </thead>
             <tbody>
                 @foreach ($webinars as $webinar)
+                @if (Auth::user()->admin_access($webinar->author->filial_id))
                     <tr>
                     <td>{{$webinar->id}}</td>
                     <td>{{$webinar->name}}</td>
@@ -47,6 +48,7 @@
                         </div>
                     </td>
                     </tr>
+                @endif
                 @endforeach
             </tbody>
         </table>

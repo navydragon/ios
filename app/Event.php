@@ -130,4 +130,9 @@ class Event extends Model
         $e_r = EventResult::where('event_id','=',$this->id)->where('user_id','=',$user_id)->get();
         return $e_r;
     }
+
+    public function author()
+    {
+        return $this->belongsTo('App\User','author_id');
+    }
 }

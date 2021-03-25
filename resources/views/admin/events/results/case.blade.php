@@ -28,6 +28,6 @@
  
   <div class="modal-footer">
       <a href="#" data-dismiss="modal" class="btn btn-default">Отмена</a>
-      <a href="#"  class="btn btn-primary">Экспорт</a>
+      <a href="/adm/docx/user_case/{{$event->id}}/{{Auth::user()->id}}"  class="btn btn-primary">Экспорт</a>
   </div>
 </div>

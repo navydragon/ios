@@ -27,7 +27,8 @@ class AdminProjectController extends Controller
 {
     public function index()
     {
-    	$projects = Project::with('p_status')->get();
+    	$projects = Project::with('p_status')->with('author:id,filial_id')->get();
+        
     	return view('admin.projects.index',compact('projects'));
     }
 
@@ -156,7 +157,7 @@ class AdminProjectController extends Controller
 
     public function add_test_to_stage (ProjectStage $project_stage,Request $request)
     {
-        $e_t = 3;
+        $e_t = 3; 
         $event = new Event; 
         $event->project_stage_id = $project_stage->id;
         $event->event_type_id = $e_t;

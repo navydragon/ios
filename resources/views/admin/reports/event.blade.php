@@ -18,6 +18,7 @@
 <div class="card">
     <div class="card-body">
         <h5>Участвовавшие пользователи:</h5>
+        <a href="/adm/docx/events/{{$event->id}}" class="btn btn-primary" target="_blank">Экспорт результатов</a>
         <table class="table table-bordered datatables-demo">
             <thead>
             <tr><th>Пользователь</th><th>Результат</th>

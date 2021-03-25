@@ -8,24 +8,41 @@ use App\TestQuestion;
 use App\TestAnswer;
 use App\AttemptResult;
 use App\EventResult;
+use App\Event;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
 class TestAttemptController extends Controller
 {
-     public function show_attempt($testattempt)
+     public function show_attempt(Event $event, $testattempt)
     {
     	$ta = TestAttempt::findOrFail($testattempt);
-    	return view('projects.tests.attempts.show',compact('ta'));
+        $qsta = $ta->attempt_results()->select('question_id')->distinct()->get();
+        $qs = [];
+        if (count($qsta) > 0)
+        {
+            foreach ($qsta as $q)
+            {
+                array_push($qs,$q->question);
+            }
+        }else{
+            $ep = $event->event_parameter;
+            $qs = $ta->test->questions_in_test($ep->show_questions);
+        }
+        
+        //dd($ta);
+    	return view('projects.tests.attempts.show',compact('ta','event','qs'));
     }
 
-    public function show_summary($testattempt, Request $request)
+    public function show_summary(Event $event,$testattempt, Request $request)
     {
+        //dd($request->get('questions') );
     	$ta = TestAttempt::findOrFail($testattempt);
-    	
+    	$qs = [];
     	 foreach ($request->get('questions') as $key => $val) {
             //ищем вопрос в базе
                 $question = TestQuestion::findOrFail($key);
+                array_push($qs,$question);
                 foreach ($question->answers as $answer) {
                 
                 if (is_array($val)) {
@@ -57,23 +74,26 @@ class TestAttemptController extends Controller
             }
          
         }
-        return view('projects.tests.attempts.summary',compact('ta'));
+        return view('projects.tests.attempts.summary',compact('ta','qs','event'));
     }
 
-    public function save_attempt($testattempt)
+    public function save_attempt(Event $event,$testattempt)
     {
        $ta = TestAttempt::findOrFail($testattempt);
        $ta->status = 1;
+       $ps = $event->event_parameter->passing_score;
        $score = 0;
-       foreach($ta->test->questions as $question)
+       $qsta = $ta->attempt_results()->select('question_id')->distinct()->get();
+       foreach($qsta as $q)
        {
+            $question = TestQuestion::findOrFail($q->question_id);
             if ($question->is_right($ta->id) == true)
             {
                 $score++;
             }
        }
        $ta->score = $score;
-       if ($score >= ($ta->test->questions->count()) * 0.7 )
+       if ($score >= $ps )
        {
             $ta->result = 1;
        }else{
@@ -91,12 +111,18 @@ class TestAttemptController extends Controller
             $er->is_passed = false;
        }
        $er->save(); 
-       return redirect('/tests/attempts/'.$ta->id.'/review');
+       return redirect('events/'.$event->id.'/tests/attempts/'.$ta->id.'/review');
     }
 
-    public function review_attempt($testattempt)
+    public function review_attempt(Event $event,$testattempt)
     {
         $ta = TestAttempt::findOrFail($testattempt);
-        return view('projects.tests.attempts.review',compact('ta'));
+        $qsta = $ta->attempt_results()->select('question_id')->distinct()->get();
+        $qs = [];
+        foreach ($qsta as $q)
+        {
+            array_push($qs,$q->question);
+        }
+        return view('projects.tests.attempts.review',compact('event','ta','qs'));
     }
 }

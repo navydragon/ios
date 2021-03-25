@@ -21,43 +21,45 @@ class AdminEventController extends Controller
 {
     public function index()
     {
-    	$events = Event::where('is_local','=',true)->get();
+    	$events = Event::where('is_local','=',true)->with('author:id,filial_id')->get();
     	return view('admin.local_events.index',compact('events'));
     }
 
     public function view_possible_tests()
     {
-        $tests = Test::withCount('questions')->get();
+        $tests = Test::with('author:id,filial_id')->withCount('questions')->get();
+       
+        
         return view('admin.local_events.modals.view_possible_tests',compact('tests'));
     }
 
     public function view_possible_surveys()
     {
-        $surveys = Survey::withCount('questions')->get();
+        $surveys = Survey::with('author:id,filial_id')->withCount('questions')->get();
         return view('admin.local_events.modals.view_possible_surveys',compact('surveys'));
     }
 
     public function view_possible_tasks()
     {
-        $tasks = Task::all();
+        $tasks = Task::with('author:id,filial_id')->get();
         return view('admin.local_events.modals.view_possible_tasks',compact('tasks'));
     }
 
     public function view_possible_materials()
     {
-        $materials = LearningModule::all();
+        $materials = LearningModule::with('author:id,filial_id')->get();
         return view('admin.local_events.modals.view_possible_materials',compact('materials'));
     }
 
     public function view_possible_cases()
     {
-        $cases = LearningCase::all();
+        $cases = LearningCase::with('author:id,filial_id')->get();
         return view('admin.local_events.modals.view_possible_cases',compact('cases'));
     }
 
     public function view_possible_webinars()
     {
-        $webinars = Webinar::all();
+        $webinars = Webinar::with('author:id,filial_id')->get();
         return view('admin.local_events.modals.view_possible_webinars',compact('webinars'));
     }
 
@@ -219,10 +221,20 @@ class AdminEventController extends Controller
                 $last_attempt = SurveyAttempt::where('event_id','=',$event->id)->where('user_id','=',$user->id)->get()->first();
                 return view('admin/events/results/survey',compact('event','user','survey','last_attempt','ep','er'));
             break;
+            case 2:
+                $lm = LearningModule::findOrFail($event->source_id);
+                return view('admin/events/results/learning_module',compact('event','user','lm','ep','er'));
+            break;
             case 3:
                 $test = Test::findOrFail($event->source_id);
                 $last_attempt = $test->user_attempts($user->id,$event->id)->latest()->get()->first();
-                return view('admin/events/results/test',compact('event','user','test','last_attempt','ep','er'));
+                $qsta = $last_attempt->attempt_results()->select('question_id')->distinct()->get();
+                $qs = [];
+                foreach ($qsta as $q)
+                {
+                    array_push($qs,$q->question);
+                }
+                return view('admin/events/results/test',compact('event','user','test','last_attempt','ep','er','qs'));
             break;
             case 5:
                 $task = Task::findOrFail($event->source_id);

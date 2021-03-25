@@ -12,7 +12,9 @@
 </div>
 <p></p>
 	<h4>Мероприятия этапа</h4>
+    <a class="btn btn-primary" href="/adm/docx/stages/{{$project_stage->id}}">Экспорт </a>
 	<div class="card">
+        
 		<table class="table table-bordered">
 			<thead>
 				<tr class="table-primary">
@@ -31,7 +33,7 @@
 						<td>{{$event->user_count()}}</td>
 						<td>
 							<a href="/adm/projects/{{$project_stage->project->id}}/stages/{{$project_stage->id}}/events/{{$event->id}}/assess" class="btn btn-sm btn-primary"><i class="fa fa-star"></i> Оценить</a>
-							<a href="/adm/projects/{{$project_stage->project->id}}/stages/{{$project_stage->id}}/analysis/events/{{$event->id}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Результаты</a>
+							<a href="/adm/reports/events/{{$event->id}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Результаты</a>
 
 						</td>
 					</tr>

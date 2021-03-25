@@ -58,42 +58,42 @@ class AdminModalController extends Controller
     public function view_possible_tests($ps)
     {
         $ps = ProjectStage::findOrFail($ps);
-        $tests = Test::withCount('questions')->get();
+        $tests = Test::with('author:id,filial_id')->withCount('questions')->get();
         return view('admin.projects.stages.modals.view_possible_tests',compact('tests','ps'));
     }
 
     public function view_possible_surveys($ps)
     {
         $ps = ProjectStage::findOrFail($ps);
-        $surveys = Survey::withCount('questions')->get();
+        $surveys = Survey::with('author:id,filial_id')->withCount('questions')->get();
         return view('admin.projects.stages.modals.view_possible_surveys',compact('surveys','ps'));
     }
 
     public function view_possible_tasks($ps)
     {
         $ps = ProjectStage::findOrFail($ps);
-        $tasks = Task::all();
+        $tasks = Task::with('author:id,filial_id')->get();
         return view('admin.projects.stages.modals.view_possible_tasks',compact('tasks','ps'));
     }
 
     public function view_possible_materials($ps)
     {
         $ps = ProjectStage::findOrFail($ps);
-        $materials = LearningModule::all();
+        $materials = LearningModule::with('author:id,filial_id')->get();
         return view('admin.projects.stages.modals.view_possible_materials',compact('materials','ps'));
     }
 
     public function view_possible_cases($ps)
     {
         $ps = ProjectStage::findOrFail($ps);
-        $cases = LearningCase::all();
+        $cases = LearningCase::with('author:id,filial_id')->get();
         return view('admin.projects.stages.modals.view_possible_cases',compact('cases','ps'));
     }
 
     public function view_possible_webinars($ps)
     {
         $ps = ProjectStage::findOrFail($ps);
-        $webinars = Webinar::all();
+        $webinars = Webinar::with('author:id,filial_id')->get();
         return view('admin.projects.stages.modals.view_possible_webinars',compact('webinars','ps'));
     }
 

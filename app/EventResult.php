@@ -12,4 +12,8 @@ class EventResult extends Model
     {
         return $this->belongsTo('App\User','user_id');
     }
+    public function event()
+    {
+        return $this->belongsTo('App\Event','event_id');
+    }
 }

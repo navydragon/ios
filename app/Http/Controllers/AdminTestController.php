@@ -13,7 +13,8 @@ class AdminTestController extends Controller
 {
     public function index()
     {
-    	$tests = Test::all();
+
+    	$tests = Test::with('author:id,filial_id')->get();
     	return view('admin.tests.index',compact('tests'));
     }
 
@@ -72,7 +73,7 @@ class AdminTestController extends Controller
     public function store_question(Test $test, Request $request)
     {
         //dd($request);
-        $test_m = Test::findOrFail($test);
+        $test_m = Test::findOrFail($test->id);
         $tq= new TestQuestion;
         $tq->test_id = $test->id;
         $tq->name = $request->name;

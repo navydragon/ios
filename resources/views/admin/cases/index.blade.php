@@ -27,6 +27,7 @@
             </thead>
             <tbody>
                 @foreach ($cases as $case)
+                @if (Auth::user()->admin_access($case->author->filial_id))
                     <tr>
                     <td>{{$case->id}}</td>
                     <td>{{$case->name}}</td>
@@ -47,6 +48,7 @@
                         </div>
                     </td>
                     </tr>
+                @endif
                 @endforeach
             </tbody>
         </table>

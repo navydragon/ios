@@ -23,6 +23,7 @@
             </thead>
             <tbody>
                 @foreach ($projects as $project)
+                @if (Auth::user()->admin_access($project->author->filial_id))
                     <tr>
                     <td>{{$project->id}}</td>
                     <td>{{$project->name}}</td>
@@ -43,6 +44,7 @@
 
                     </td>
                     </tr>
+                @endif
                 @endforeach
             </tbody>
         </table>

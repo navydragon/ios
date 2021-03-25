@@ -17,4 +17,9 @@ class Webinar extends Model
     {
         return $this->hasMany('App\WebinarParticipation');
     }
+
+    public function author()
+    {
+        return $this->belongsTo('App\User','author_id');
+    }
 }

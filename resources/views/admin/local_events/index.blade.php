@@ -31,6 +31,7 @@
 			</thead>
 			<tbody>
 				@foreach ($events as $event)
+                @if (Auth::user()->admin_access($event->author->filial_id))
                 @php $ev = $event->description(); @endphp
 					<tr>
 					<td>{{$event->id}}</td>
@@ -51,6 +52,7 @@
                     </div>
                     </td>
 					</tr>
+                @endif
 				@endforeach
 			</tbody>
 		</table>

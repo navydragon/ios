@@ -10,7 +10,9 @@
   <select name="material_id" class="custom-select" required>
     <option selected value="">Выберите методический материал</option>
     @foreach ($materials as $elem)
+    @if (Auth::user()->admin_access($elem->author->filial_id))
         <option value="{{$elem->id}}">{{$elem->name}}</option>
+    @endif
     @endforeach
     </select>    
   </div>

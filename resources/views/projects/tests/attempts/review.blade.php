@@ -9,11 +9,11 @@
 			<table class="table table-striped">
 				<tr><td><strong>Тест начат:</strong></td><td> {{\Carbon\Carbon::createFromTimeStamp(strtotime($ta->created_at))->format('d.m.y H:i:s')}}</td></tr>
 				<tr><td><strong>Завершен:</strong></td><td>{{\Carbon\Carbon::createFromTimeStamp(strtotime($ta->updated_at))->format('d.m.y H:i:s')}}</td></tr>
-				<tr><td><strong>Результат:</strong></td><td>{{$ta->result == 1 ? "Пройден" : "Не пройден"}} ({{$ta->score}} / {{$ta->test->questions->count()}})</td></tr>
+				<tr><td><strong>Результат:</strong></td><td>{{$ta->result == 1 ? "Пройден" : "Не пройден"}} ({{$ta->score}} / {{count($qs)}})</td></tr>
 			</table>
 			<hr>
 			@php $n = 1; @endphp
-			@foreach($ta->test->questions as $question)
+			@foreach($qs as $question)
 			<div class="row">
 				<div class="col-md-2 alert  alert-default margin-bottom-30" id="q{{$n}}">
 					<p><strong>Вопрос № {{$n}}</strong></p>
@@ -76,7 +76,7 @@
 				</div>
 				<div class="panel-body">
 					@php $n=0;@endphp
-					@foreach($ta->test->questions as $question)
+					@foreach($qs as $question)
 					@php $n++;@endphp
 					<a href="#q{{$n}}" class="btn btn-default radius-0 relative">
 						@if ($question->is_right($ta->id))

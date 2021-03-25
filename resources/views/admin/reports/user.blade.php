@@ -64,6 +64,33 @@
         </div>
     </div>
     <div class="tab-pane fade card" id="events">
+    <div class="card-body">
+        <table class="table table-bordered datatables-demo">
+			<thead style="background-color: #333333; color: #fff;">
+				<tr>
+					<th>ID</th>
+					<th>Название</th>
+					<th>Тип</th>
+					<th>Дата последнего обращения</th>
+					<th>Действия</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach ($user->local_events() as $event_result)
+                    @if ($event_result->event->is_local == true)
+                    @php $e_d = $event_result->event->description(); @endphp
+					<tr>
+					<td>{{$event_result->id}}</td>
+                    <td>{{$e_d->name}}</td>
+                    <td>{{$e_d->type}}</td>
+                    <td>{{\Carbon\Carbon::createFromTimeStamp(strtotime($event_result->last_activity))->format('d.m.Y H:i:s')}}</td>
+                    <td><a href="#" data-toggle="modal" data-remote="/adm/events/{{$event_result->event->id}}/results/{{$user->id}}"  data-target="#myModal" class="btn btn-primary">Подробнее</a></td>
+					</tr>
+                    @endif
+				@endforeach
+			</tbody>
+		</table>
+        </div>
     </div>
 </div>
 

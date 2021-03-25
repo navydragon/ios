@@ -13,7 +13,7 @@ class AdminCaseController extends Controller
 {
     public function index()
     {
-    	$cases = LearningCase::all();
+        $cases = LearningCase::with('author:id,filial_id')->get();
     	return view('admin.cases.index',compact('cases'));
     }
 

@@ -9,6 +9,7 @@ use App\User;
 use App\Event;
 use App\Ticket;
 use App\ThreadMessage;
+use Illuminate\Support\Facades\DB;
 use Calendar;
 class AdminController extends Controller
 {
@@ -19,6 +20,11 @@ class AdminController extends Controller
     	 $users = User::all();
        $evs = Event::all();
        $tickets = Ticket::all()->where('status','=',1);
+        $types = DB::table('tests')->count()
+        +DB::table('tasks')->count()
+        +DB::table('surveys')->count()
+        +DB::table('learning_cases')->count()
+        +DB::table('webinars')->count();
     	$events = []; 
        	$data = ProjectStage::all();
        	$messages = ThreadMessage::latest('updated_at')->limit(5)->get();
@@ -34,6 +40,6 @@ class AdminController extends Controller
             ];
           }
         }
-    	return view('admin.index',compact('projects','users','events','messages','evs','tickets'));
+    	return view('admin.index',compact('projects','users','events','messages','evs','tickets','types'));
     }
 }

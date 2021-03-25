@@ -60,56 +60,64 @@
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h4 class="modal-title">Создать нового пользователя</h4>
         </div>
-      	<form method="POST" action="/adm/tests">
+      	<form method="POST" action="/adm/users">
 			@csrf
         	<div class="modal-body">
 				<div class="row">
 					<div class="col-md-12">
-                    <form method="POST" action="/adm/users/{{$user->id}}/update">
-                    @csrf
-                    <div class="form-group row">
-                        <label class="col-form-label col-sm-2 text-sm-right">ID</label>
-                        <div class="col-sm-10">
-                            {{$user->id}}
-                        </div>
-                    </div>
                     <div class="form-group row">
                         <label class="col-form-label col-sm-2 text-sm-right" required>Фамилия</label>
                         <div class="col-sm-10">
-                            <input type="text" name="lastname" class="form-control" placeholder="Фамилия" value="{{$user->lastname}}" required>
+                            <input type="text" name="lastname" value="{{ old('lastname') }}" class="form-control" placeholder="Фамилия" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-sm-2 text-sm-right" >Имя</label>
                         <div class="col-sm-10">
-                            <input type="text" name="firstname" class="form-control" value="{{$user->firstname}}" placeholder="Имя" required>
+                            <input type="text" name="firstname" value="{{ old('firstname') }}" class="form-control" placeholder="Имя" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-sm-2 text-sm-right">Отчество</label>
                         <div class="col-sm-10">
-                            <input type="text" name="middlename" class="form-control" value="{{$user->middlename}}" placeholder="Отчество" required>
+                            <input type="text" name="middlename" value="{{ old('middlename') }}" class="form-control"  placeholder="Отчество" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-sm-2 text-sm-right">E-mail (логин для входа)</label>
                         <div class="col-sm-10">
-                            <input type="text" name="email" class="form-control" value="{{$user->email}}" placeholder="E-mail" required>
+                            <input type="text" name="email" value="{{ old('email') }}" class="form-control"  placeholder="E-mail" required>
+                        </div>
+                    </div>
+                    @if (\Session::has('error_email'))
+                    <div class="alert alert-mini alert-danger mb-30">
+                        <strong>Ошибка!</strong> {!! \Session::get('error_email') !!}
+                    </div>
+                    @endif
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-2 text-sm-right">Пароль</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="password" value="{{ old('password') }}" class="form-control"  placeholder="Пароль" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-sm-2 text-sm-right">Контактный телефон</label>
                         <div class="col-sm-10">
-                            <input type="text" name="phone" class="form-control" value="{{$user->phone}}" placeholder="Телефон" required>
+                            <input type="text" name="phone" value="{{ old('phone') }}" class="form-control"  placeholder="Телефон" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-sm-2 text-sm-right">Филиал ОАО «РЖД»</label>
                         <div class="col-sm-10">
-                            <select id="filial_id"  name="filial_id" value="" class="custom-select form-control" required >
+                            <select id="filial_id"  name="filial_id" value="{{ old('filial_id') }}" class="custom-select form-control" required >
                                 <option selected value="">Не выбрано</option> 
+                                <option value="">Не выбрано</option> 
                                 @foreach($filials as $filial)
+                                @if ( old('filial_id') == $filial->id)
+                                    <option value="{{$filial->id}}" selected>{{$filial->name}}</option>
+                                @else
                                     <option value="{{$filial->id}}">{{$filial->name}}</option>
+                                @endif
                                 @endforeach
                             </select>
                         </div>
@@ -117,22 +125,17 @@
                     <div class="form-group row">
                         <label class="col-form-label col-sm-2 text-sm-right">Подразделение</label>
                         <div class="col-sm-10">
-                            <input type="text" name="division" class="form-control" value="{{$user->division}}" placeholder="Подразделение" required>
+                            <input type="text" name="division" class="form-control" value="{{ old('division') }}"  placeholder="Подразделение" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-form-label col-sm-2 text-sm-right">Должность</label>
                         <div class="col-sm-10">
-                            <input type="text" name="job" class="form-control" value="{{$user->job}}" placeholder="Должность" required>
+                            <input type="text" name="job" value="{{ old('job') }}" class="form-control" placeholder="Должность" required>
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                    <div class="col-sm-10 ml-sm-auto">
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
-                    </div>
-                    </div>
-                </form>
+                   
 					</div>
 				</div>
         	</div>
@@ -184,5 +187,18 @@ $('body').on('click', '[data-toggle="modal"]', function(){
     <script>
         toastr.success('{!! \Session::get('success') !!}', 'Успех!',{"positionClass": "toast-bottom-right",})
     </script>
+@endif
+@if (\Session::has('success_create'))
+    <script>
+        toastr.success('{!! \Session::get('success_create') !!}', 'Успех!',{"positionClass": "toast-bottom-right",})
+    </script>
+@endif
+
+@if (\Session::has('error_email'))
+<script>
+   $(function() {
+    $('#myModal').modal('show');
+   });
+</script>
 @endif
 @endsection

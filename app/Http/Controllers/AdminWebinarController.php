@@ -6,11 +6,13 @@ use Illuminate\Http\Request;
 use App\Webinar;
 use App\WebinarParticipation;
 use App\Event;
+use Illuminate\Support\Facades\Auth;
+
 class AdminWebinarController extends Controller
 {
     public function index()
     {
-    	$webinars = Webinar::all();
+        $webinars = Webinar::with('author:id,filial_id')->get();
     	return view('admin.webinars.index',compact('webinars'));
     }
 
@@ -23,6 +25,7 @@ class AdminWebinarController extends Controller
         $webinar->url = $request->url;
         $webinar->room_link = " ";
         $webinar->admin_url = $request->admin_url;
+        $webinar->author_id = Auth::user()->id;
         $webinar->save();
         return back();
     }
